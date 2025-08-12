@@ -1,12 +1,704 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
-    <title>JustElaina 主页</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灰之魔女伊蕾娜 | 魔女之旅</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* 浅色模式变量 */
+            --primary: #6a55c2;
+            --primary-light: #8a6dee;
+            --secondary: #f8f3ff;
+            --accent: #e0b0ff;
+            --text: #333;
+            --light: #fff;
+            --card-bg: #fff;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --section-alt: #f8f3ff;
+            --hero-overlay: linear-gradient(135deg, rgba(106, 85, 194, 0.8) 0%, rgba(160, 136, 255, 0.8) 100%);
+
+            /* 图片滤镜 - 浅色模式无滤镜 */
+            --img-filter: none;
+        }
+
+        /* 暗色模式变量 */
+        [data-theme="dark"] {
+            --primary: #9d8aff;
+            --primary-light: #b6a6ff;
+            --secondary: #1a1625;
+            --accent: #b185db;
+            --text: #e0d6ff;
+            --light: #2a2438;
+            --card-bg: #211e2e;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            --section-alt: #211e2e;
+            --hero-overlay: linear-gradient(135deg, rgba(74, 54, 144, 0.85) 0%, rgba(106, 78, 196, 0.85) 100%);
+
+            /* 图片滤镜 - 暗色模式轻微降低亮度 */
+            --img-filter: brightness(0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--secondary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 导航栏样式 */
+        nav {
+            background: var(--light);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 英雄区域样式 */
+        .hero {
+            height: 80vh;
+            background: var(--hero-overlay),
+                url('./assets/c1.png') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--light);
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--light);
+            color: var(--primary);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 内容区域样式 */
+        section {
+            padding: 5rem 0;
+        }
+
+        section:nth-child(even) {
+            background: var(--section-alt);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 1rem;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            filter: var(--img-filter);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* 角色介绍特殊布局 */
+        .character-profile {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .character-image {
+            border-radius: 10px;
+            overflow: hidden;
+            /* box-shadow: var(--shadow); */
+        }
+
+        .character-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s;
+            filter: var(--img-filter);
+        }
+
+        .character-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .character-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .character-stats {
+            margin: 2rem 0;
+        }
+
+        .stat-item {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .stat-label {
+            font-weight: 600;
+            min-width: 120px;
+            color: var(--primary);
+        }
+
+        /* 名台词样式 */
+        .quote {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--light);
+            padding: 3rem;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: var(--shadow);
+        }
+
+        .quote-text {
+            font-size: 1.8rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .quote-source {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background: var(--text);
+            color: var(--light);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .links {
+            text-decoration: none;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .footer-links li {
+            margin: 0 1rem;
+        }
+
+        .footer-links a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            opacity: 0.7;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .character-profile {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .theme-toggle {
+                margin-left: 10px;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>欢迎来到 JustElaina 的主页！</h1>
-    <p>这是一个基本的 HTML 页面。</p>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container navbar">
+            <a class="logo links" href="/">
+                <i class="fas fa-hat-wizard"></i>
+                <span>灰之魔女</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">角色介绍</a></li>
+                <li><a href="#gallery">形象画廊</a></li>
+                <li><a href="#story">背景故事</a></li>
+                <li><a href="#quotes">名台词</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>伊蕾娜 - 灰之魔女</h1>
+            <p>「漫步于山川之间，拥有沉鱼落雁之姿的魔女是谁？没错，就是我。」</p>
+            <a href="#about" class="btn">探索旅程</a>
+        </div>
+    </header>
+
+    <!-- 角色介绍 -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title animated">
+                <h2>星尘般的旅人</h2>
+            </div>
+            <div class="character-profile">
+                <div class="character-image animated">
+                    <img src="./assets/common.png"
+                        alt="伊蕾娜正式魔女形象">
+                </div>
+                <div class="character-info animated delay-1">
+                    <h3>人物档案</h3>
+                    <p>本作《魔女之旅》的核心主角，15岁便取得魔法使最高位「魔女」称号的天才少女。标志性的灰白色长发与星形胸针是她的象征，自称为「灰之魔女」的旅行者。</p>
+
+                    <div class="character-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">魔女名：</span>
+                            <span class="stat-value">灰之魔女</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">出身地：</span>
+                            <span class="stat-value">和平国罗贝塔</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">生日：</span>
+                            <span class="stat-value">10月17日</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">年龄：</span>
+                            <span class="stat-value">18岁左右（主时间线）</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">特技：</span>
+                            <span class="stat-value">高级魔法、料理（尤其炖菜）</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">爱好：</span>
+                            <span class="stat-value">旅行、读书、赚钱</span>
+                        </div>
+                    </div>
+
+                    <p>因幼时阅读《妮可冒险记》而憧憬旅行，在师父「星尘魔女」芙兰的指导下成为魔女后，开始了环游世界的旅程。其美貌与才能连太阳见了都不由眯起眼睛——没错，就是她本人说的。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 角色特点 -->
+    <section>
+        <div class="container">
+            <div class="section-title animated">
+                <h2>千面魔女的魅力</h2>
+            </div>
+            <div class="grid">
+                <div class="card animated">
+                    <img src="./assets/24.jpg"
+                        alt="天才魔女伊蕾娜">
+                    <div class="card-content">
+                        <h3>✨ 天才魔法师</h3>
+                        <p>14岁成为见习魔女，15岁获得最高位魔女称号，史上最年轻的天才。魔法实力超群，战斗中以多种元素魔法组合著称，骑扫帚采用优雅的侧坐式。</p>
+                    </div>
+                </div>
+                <div class="card animated delay-1">
+                    <img src="./assets/26.jpg"
+                        alt="伊蕾娜性格特点">
+                    <div class="card-content">
+                        <h3>😼 复杂多面性</h3>
+                        <p>自称「美得如花般绽放」的自恋狂，实则兼具温柔与毒舌的双重性格。表面冷漠但常被卷入事件帮助他人，因贪财和腹黑被称为「屑魔女」。</p>
+                    </div>
+                </div>
+                <div class="card animated delay-2">
+                    <img src="./assets/25.jpg"
+                        alt="伊蕾娜人际关系">
+                    <div class="card-content">
+                        <h3>🌍 旅行者哲学</h3>
+                        <p>坚持「不干涉主义」的旅行原则，却常在关键时伸出援手。与众多角色建立深刻羁绊，包括徒弟沙耶、师父芙兰等，形成「百合后宫」。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 形象画廊 -->
+    <section id="gallery">
+        <div class="container">
+            <div class="section-title animated">
+                <h2>四季旅装图鉴</h2>
+            </div>
+            <div class="grid">
+                <div class="card animated">
+                    <img src="./assets/common.png"
+                        alt="伊蕾娜经典魔女装">
+                    <div class="card-content">
+                        <h3>经典魔女装</h3>
+                        <p>春秋季标志性装扮：深灰长袍+三角帽+星形胸针。体现传统魔女美学的同时，兼顾旅行实用性。</p>
+                    </div>
+                </div>
+                <div class="card animated delay-1">
+                    <img src="./assets/summer.jpg"
+                        alt="伊蕾娜夏季装扮">
+                    <div class="card-content">
+                        <h3>夏日清凉装</h3>
+                        <p>米色连衣裙搭配凉鞋，散发青春气息。轻量化材质适合高温气候，被观众称为「有穹妹既视感」。</p>
+                    </div>
+                </div>
+                <div class="card animated delay-2">
+                    <img src="./assets/winter.png"
+                        alt="伊蕾娜冬季装扮">
+                    <div class="card-content">
+                        <h3>冬日保暖装</h3>
+                        <p>厚实连衣裙+黑色连裤袜+毛领外套，首次展现的「黑丝形态」引发粉丝热议。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 背景故事 -->
+    <section id="story">
+        <div class="container">
+            <div class="section-title animated">
+                <h2>星尘轨迹</h2>
+            </div>
+            <div class="character-profile">
+                <div class="character-info animated">
+                    <h3>成为魔女之路</h3>
+                    <p>出生于魔法世家，母亲是著名魔女维多利加。14岁以最年轻之姿通过见习魔女考试，却因才能遭人嫉妒而被所有魔女拒收。</p>
+                    <p>在森林中找到被称作「星尘魔女」的芙兰为师，经历严苛训练：</p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>初期只被安排杂务，未获魔法指导</li>
+                        <li>一个月后与芙兰进行实力悬殊的比试惨败</li>
+                        <li>在挫败中学会放下骄傲，开始真正成长</li>
+                    </ul>
+                    <p>一年后战胜芙兰，获得「灰之魔女」称号，开启环游世界的旅程。</p>
+
+                    <h3 style="margin-top: 2rem;">旅行中的高光时刻</h3>
+                    <p>在魔法使之国收沙耶为徒，赠其魔女帽改变她的人生轨迹；在无名之国协助失忆公主对抗诅咒；在诚实之国破除「禁谎之剑」的诅咒。</p>
+                </div>
+                <div class="character-image animated delay-1">
+                    <img src="./assets/teacher.png"
+                        alt="伊蕾娜与师父芙兰">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 名台词 -->
+    <section id="quotes">
+        <div class="container">
+            <div class="section-title animated">
+                <h2>魔女箴言</h2>
+            </div>
+            <div class="quote animated">
+                <p class="quote-text">
+                    「漫步于清澈蓝天之下，如果有人在一旁，定会被吸引住目光，有着闭花羞月般美貌的魔女，究竟是谁呢？那就是身在旅途，编制着我和我们的故事《魔女之旅》的人——没错，就是我。」</p>
+                <p class="quote-source">— 伊蕾娜标志性自我介绍</p>
+            </div>
+
+            <div class="grid" style="margin-top: 3rem;">
+                <div class="card animated">
+                    <div class="card-content">
+                        <h3>🍞 关于食物</h3>
+                        <p>「最喜欢面包（尤其是牛角面包），讨厌蘑菇。吃到美味时呆毛会摇动」</p>
+                    </div>
+                </div>
+                <div class="card animated delay-1">
+                    <div class="card-content">
+                        <h3>💫 关于美貌</h3>
+                        <p>「在诚实之国尝试说『我不漂亮』却无法开口，证明自己的美貌是客观事实」</p>
+                    </div>
+                </div>
+                <div class="card animated delay-2">
+                    <div class="card-content">
+                        <h3>💰 关于金钱</h3>
+                        <p>「曾卖致幻火柴赚钱被师父抓获，用可爱外表蒙混过关——沙耶：通通拷走！」</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <h3>灰之魔女之旅</h3>
+            <ul class="footer-links">
+                <li><a href="#"><i class="fas fa-arrow-up"></i> 回到顶部</a></li>
+                <li><a href="#about"><i class="fas fa-user"></i> 角色档案</a></li>
+                <li><a href="#gallery"><i class="fas fa-images"></i> 形象画廊</a></li>
+                <li><a href="https://ga.sbcr.jp/sp/tabitabi/index.html" target="_blank"><i class="fas fa-external-link-alt"></i> 官网</a></li>
+                <li><a href="https://majotabi.jp/" target="_blank"><i class="fas fa-external-link-alt"></i> 动画官网</a></li>
+            </ul>
+            <p class="copyright">© 2025 基于轻小说《魔女之旅》制作 | 由AI生成 | 图片源自官方素材</p>
+        </div>
+    </footer>
+
+    <script>
+        // 主题切换功能
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+
+        // 检查本地存储或系统偏好
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // 设置初始主题
+        if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        // 切换主题
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        });
+
+        // 滚动动画
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.animated');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.visibility = 'visible';
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animatedElements.forEach(el => {
+                el.style.opacity = 0;
+                el.style.visibility = 'hidden';
+                observer.observe(el);
+            });
+        });
+    </script>
 </body>
+
 </html>
