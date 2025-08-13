@@ -115,15 +115,19 @@
       "./assets/images/06.jpg",
       "./assets/images/07.jpg",
       "./assets/images/08.jpg",
+      "./assets/images/08-1.jpg",
       "./assets/images/09.jpg",
       "./assets/images/10.jpg",
       "./assets/images/11.jpg",
+      "./assets/images/11-1.jpg",
       "./assets/images/12.jpg",
       "./assets/images/13.jpg",
       "./assets/images/14.jpg",
+      "./assets/images/14-1.jpg",
       "./assets/images/15.jpg",
       "./assets/images/16.jpg",
       "./assets/images/17.jpg",
+      "./assets/images/17-1.jpg",
       './assets/images/18.jpg',
       './assets/images/19.jpg',
       './assets/images/20.jpg',
@@ -143,14 +147,48 @@
       "./assets/images/c01.jpg",
       "./assets/images/c02.jpg",
     ];
-    const gallery = document.getElementById('gallery');
-    images.forEach(img => {
-      const image = document.createElement('img');
-      image.loading = 'lazy';
-      image.alt = "Elaina";
-      image.src = img;
-      gallery.appendChild(image);
-    });
+    
+    // 根据屏幕宽度计算列数
+    function getColumnsCount() {
+      const w = window.innerWidth;
+      if (w <= 540) return 1;
+      if (w <= 820) return 2;
+      if (w <= 1100) return 3;
+      return 4;
+    }
+
+    // 渲染图片
+    function renderGallery() {
+      gallery.innerHTML = '';
+      const colCount = getColumnsCount();
+      const cols = [];
+
+      // 创建列
+      for (let i = 0; i < colCount; i++) {
+        const col = document.createElement('div');
+        col.className = 'gallery-column';
+        cols.push(col);
+        gallery.appendChild(col);
+      }
+
+      // 按行从左到右分配图片
+      images.forEach((src, idx) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.loading = 'lazy';
+        img.alt = 'Elaina';
+
+        // 按行从左到右: idx % colCount 决定列
+        const colIndex = idx % colCount;
+        cols[colIndex].appendChild(img);
+      });
+    }
+
+    // 初次渲染
+    renderGallery();
+
+    // 窗口大小变化时重新渲染
+    window.addEventListener('resize', renderGallery);
 
   </script>
 </body>
