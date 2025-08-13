@@ -92,16 +92,24 @@ header {
 h1 {
   font-size: clamp(28px, 3.6vw, 46px);
   line-height: 1.15;
-  margin: 0 0 12px;
 }
 
 h2 {
   font-size: clamp(20px, 2.2vw, 28px);
-  margin: 34px 0 14px;
 }
 
 p {
   margin: 0 0 10px;
+}
+
+a {
+  color: #9b5de5;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #f15bb5;
 }
 
 /* 容器设置 Masonry 样式 */
@@ -138,14 +146,4 @@ footer {
 .links {
   display: flex;
   gap: 12px;
-}
-
-.links a {
-  color: #9b5de5;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.links a:hover {
-  color: #f15bb5;
 }

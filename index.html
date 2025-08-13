@@ -38,7 +38,11 @@
     </section>
 
     <section>
-      <h2 data-i18n="gallery">图片集</h2>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <h2 data-i18n="gallery">图片集</h2>
+        <a href="https://x.com/azure_0608_sub" target="_blank" rel="noreferrer noopener"
+          style="font-size: large;">あずーる</a>
+      </div>
       <div class="gallery-masonry" id="gallery"></div>
     </section>
 
@@ -147,7 +151,7 @@
       "./assets/images/c01.jpg",
       "./assets/images/c02.jpg",
     ];
-    
+
     // 根据屏幕宽度计算列数
     function getColumnsCount() {
       const w = window.innerWidth;
