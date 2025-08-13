@@ -1,0 +1,157 @@
+:root {
+    --bg: #fff;
+    --fg: #0b1220;
+    --color-main: #f5d0fe;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0c0f14;
+        --fg: #e9eefb;
+        --color-main: #5b0a7d;
+    }
+}
+
+body {
+    scroll-behavior: smooth;
+    margin: 0;
+    font-family: Inter, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+}
+
+.wrap {
+    max-width: 1100px;
+    padding: 0 20px 40px 20px;
+    margin: 0 auto;
+}
+
+header {
+    background: var(--bg);
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 20px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+}
+
+#langToggle {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background: var(--color-main);
+    color: var(--bg);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+#langToggle:hover {
+    background: #d78ff1; /* 悬停颜色 */
+}
+
+
+.logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 10px;
+    background: conic-gradient(from 210deg, #6b7cff, transparent 60%);
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 20px;
+    align-items: center;
+    padding: 28px 0;
+}
+
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hero-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+h1 {
+    font-size: clamp(28px, 3.6vw, 46px);
+    line-height: 1.15;
+    margin: 0 0 12px;
+}
+
+h2 {
+    font-size: clamp(20px, 2.2vw, 28px);
+    margin: 34px 0 14px;
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+/* Masonry 样式，自动排列不同比例图片 */
+.gallery-masonry {
+    column-count: 4;       /* 列数，可根据屏幕调节 */
+    column-gap: 6px;       /* 列间距 */
+}
+
+@media (max-width: 1100px) {
+    .gallery-masonry { column-count: 3; }
+}
+@media (max-width: 820px) {
+    .gallery-masonry { column-count: 2; }
+}
+@media (max-width: 540px) {
+    .gallery-masonry { column-count: 1; }
+}
+
+/* 每张图片完整显示，自动填充列 */
+.gallery-masonry img {
+    width: 100%;           /* 宽度占满列 */
+    height: auto;          /* 保持原始比例 */
+    display: block;
+    margin-bottom: 6px;    /* 行间距 */
+    border-radius: 8px;
+}
+
+
+footer {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 13px;
+}
+
+/* 美化 footer 链接 */
+.links {
+    display: flex;
+    gap: 12px;
+}
+
+.links a {
+    color: #9b5de5;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.links a:hover {
+    color: #f15bb5;
+}
